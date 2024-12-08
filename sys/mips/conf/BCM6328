@@ -1,0 +1,119 @@
+ident		BCM6328
+machine		mips
+cpu		CPU_MIPS4KC
+
+options		HZ=1000
+options		INTRNG
+# 8 cpu irqs + 64 chipirq irqs
+options		MIPS_NIRQ=128
+
+options 	ALT_BREAK_TO_DEBUGGER
+options 	BREAK_TO_DEBUGGER
+options		BOOTVERBOSE=1
+
+makeoptions	TRAMPLOADADDR=0x80800000
+makeoptions	DEBUG="-g3 -DFDT=1 -DUSB_DEBUG=1"		#Build kernel with gdb(1) debug symbols
+makeoptions	MODULES_OVERRIDE=""
+makeoptions	ARCH_FLAGS="-march=mips32"
+
+files		"../bcm63xx/files.bcm63xx"
+
+options 	DDB
+options 	KDB
+options		GDB
+
+options		COMPAT_FREEBSD10
+options		COMPAT_FREEBSD11
+options		EXT_RESOURCES
+#options		MIPS_DISABLE_L1_CACHE
+
+options 	SCHED_4BSD		#4BSD scheduler
+#options 	INET			#InterNETworking
+#options 	TCP_HHOOK		# hhook(9) framework for TCP
+#options 	NFSCL			#Network Filesystem Client
+#options 	NFS_ROOT		#NFS usable as /, requires NFSCL
+options 	PSEUDOFS		#Pseudo-filesystem framework
+options 	_KPOSIX_PRIORITY_SCHEDULING #Posix P1003_1B real-time extensions
+
+options         FFS                     #Berkeley Fast Filesystem
+#options			CD9660
+options         SOFTUPDATES             #Enable FFS soft updates support
+options         UFS_ACL                 #Support for access control lists
+options         UFS_DIRHASH             #Improve performance on big directories
+options			UFS_EXTATTR
+options			UFS_EXTATTR_AUTOSTART
+#option			MSDOSFS
+
+device		xz
+options		GEOM_UZIP
+options		GEOM_PART_GPT
+options		GEOM_LABEL		# Providers labelization.
+#options		MD_ROOT
+#options		MD_ROOT_SIZE=4096
+options		ROOTDEVNAME=\"ufs:/dev/da0p1\"
+#options		ROOTDEVNAME=\"ufs:/dev/md0.uzip\"
+#makeoptions		MFS_IMAGE=/tmp/rootfs.img.ulzma
+#options		VM_KMEM_SIZE_SCALE=1
+
+# Debugging for use in -current
+#options 	DEADLKRES
+#options 	INVARIANTS
+#options 	INVARIANT_SUPPORT
+#options		WITNESS
+#options		KTRACE
+
+#options 	BUS_DEBUG
+#makeoptions	BUS_DEBUG
+#options 	EARLY_PRINTF
+#options	VERBOSE_SYSINIT
+options		DIAGNOSTIC
+#makeoptions	VERBOSE_SYSINIT
+options		KDB_TRACE
+
+#device		bcm63xx_hsspi
+#device		bcm63xx_pcie
+
+#device		pci
+
+device		gpio
+device		mdio
+
+#device		spibus
+#device		mx25l			# Serial Flash
+
+device		uart
+
+device		loop
+device		ether
+device		md
+
+device 		miibus			# attachments
+#device		uether
+#device		ure
+#device		re
+
+# pci devices
+
+# USB
+options 	USB_DEBUG		# enable debug msgs
+# taken from atheros
+options 	USB_EHCI_BIG_ENDIAN_DESC        # handle big-endian byte order
+options 	USB_HOST_ALIGN=64 # AR71XX (MIPS in general?) requires this
+
+device		usb			# USB Bus (required)
+device		ohci			# OHCI interface
+device		ehci
+device		clk
+device		phy
+device		hwreset
+
+device		fdt_clock
+device		fdt_pinctrl
+device		umass
+device		scbus
+device		da
+device		random
+
+options		FDT
+options		FDT_DTB_STATIC
+makeoptions		FDT_DTS_FILE=bcm6328-netcomm-nb604n-2.dts

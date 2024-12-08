@@ -1,0 +1,13 @@
+mips/bcm63xx/bcm63xx_machdep.c standard
+mips/bcm63xx/bcm63xx.c standard
+mips/bcm63xx/bcm63xx_uart.c optional uart fdt
+mips/bcm63xx/bcm63xx_pic.c optional fdt
+mips/bcm63xx/bcm63xx_hsspi.c optional bcm63xx_hsspi fdt
+mips/bcm63xx/bcm63xx_pcie.c optional bcm63xx_pcie fdt
+mips/mips/tick.c standard
+dev/usb/usb_dynamic.c optional usb
+dev/usb/controller/generic_ohci.c optional ohci
+dev/usb/controller/generic_ehci.c optional ehci
+dev/usb/controller/generic_usb_if.m optional ohci ehci
+dev/usb/controller/generic_ehci_fdt.c optional ehci
+dev/flash/mx25l.c optional mx25l

@@ -1,0 +1,17 @@
+/dts-v1/;
+#include "bcm6358.dtsi";
+/ {
+	model = "Netgear DGN2200v1";
+	compatible = "bcm6358,netgear-dgn2200";
+	aliases {
+		uart0 = &uart0;
+	};
+	chosen {
+		stdin = "uart0";
+		stdout = "uart0";
+	/*	bootargs = "fag";*/
+	};
+};
+&uart0 {
+	status = "okay";
+};

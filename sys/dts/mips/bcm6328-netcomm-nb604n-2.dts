@@ -1,0 +1,31 @@
+/dts-v1/;
+
+#include "bcm6328.dtsi";
+
+/ {
+	model = "Netcomm NB604N-02";
+	compatible = "bcm6328,netcomm-nb604n-2", "brcm,bcm6328";
+	memory {
+		device_type = "memory";
+		reg = <0x0 0x4000000>;
+	};
+	aliases {
+		uart0 = &uart0;
+	};
+	chosen {
+		stdin = "uart0";
+		stdout = "uart0";
+	};
+};
+
+&uart0 {
+	status = "okay";
+};
+
+&hsspi {
+	flash0 {
+		reg = <0>;
+		spi-max-frequency = <20000000>;
+		compatible = "s25fl064", "jedec,spi-nor";
+	};
+};

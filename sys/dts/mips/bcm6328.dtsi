@@ -1,0 +1,69 @@
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "brcm,bcm6328";
+	cpus {
+		cpu@0 {
+			device-type = "cpu";
+			compatible = "brcm,bmips4350";
+		};
+	};
+	memory {
+		device_type = "memory";
+		reg = <0x0 0x2000000>;
+	};
+	cpupic: cpupic@0 {
+		#address-cells = <0>;
+		#interrupt-cells = <1>;
+		interrupt-controller;
+		compatible = "mti,cpu-interrupt-controller";
+	};
+	ubus {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		#interrupt-cells = <1>;
+		compatible = "simple-bus";
+		ranges = <0x10000000 0x10ffffff>;
+		bcmpic0: bcmpic@10000020 {
+			#interrupt-cells = <1>;
+			reg = <0x10000020 0x20>;
+			interrupt-controller;
+			interrupts = <2 3>;
+			interrupt-parent = <&cpupic>;
+			compatible = "brcm,bcm63xx-pic";
+		};
+		uart0: serial@10000100 {
+			compatible = "brcm,bcm6345-uart";
+			reg = <0x10000100 0x18>;
+			current-speed = <115200>;
+			clock-frequency = <50000000>;
+			reg-io-width = <4>;
+			interrupts = <28>;
+			interrupt-parent = <&bcmpic0>;
+			status = "disabled";
+		};
+		ehci: usb@10002500 {
+			compatible = "generic-ehci";
+			reg = <0x10002500 0x100>;
+			interrupt-parent = <&bcmpic0>;
+			interrupts = <42>;
+			big-endian;
+		};
+		ohci: usb@10002600 { 
+			compatible = "generic-ohci";
+			reg = <0x10002600 0x100>;
+			interrupt-parent = <&bcmpic0>;
+			interrupts = <41>;
+			big-endian;
+		};
+		hsspi: spi@10001000 {
+			compatible = "brcm,bcm6328-hsspi";
+			reg = <0x10001000 0x600>;
+			interrupts = <29>;
+		};
+		pcie: pcie@10e40000 {
+			compatible = "brcm,bcm63xx-pcie";
+			reg = <0x10e40000 0x10000>;
+		};
+	};
+};

@@ -1,0 +1,17 @@
+/dts-v1/;
+#include "bcm63268.dtsi";
+/ {
+	model = "FAST 3864OP";
+	compatible = "bcm63268,fast3864op";
+	aliases {
+		uart0 = &uart0;
+	};
+	chosen {
+		stdin = "uart0";
+		stdout = "uart0";
+	/*	bootargs = "fag";*/
+	};
+};
+&uart0 {
+	status = "okay";
+};

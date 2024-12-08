@@ -136,6 +136,14 @@ VECTOR(_locore, unknown)
 	COP0_SYNC
 
 	/* Make sure KSEG0 is cached */
+#	mfc0 t0, $22
+#	and t0, ~((1<<31)|(1<<30))
+#	mtc0 t0, $22
+#	li t0, 0x2
+	# config0: CLF=0, NBK=0
+	mfc0 t0, $22
+	and t0, ~((1<<20)|(1<<17))
+	mtc0 t0, $22
 	li	t0, MIPS_CCA_CACHED
 	mtc0	t0, MIPS_COP_0_CONFIG
 	COP0_SYNC

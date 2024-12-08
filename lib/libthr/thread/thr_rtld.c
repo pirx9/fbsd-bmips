@@ -56,7 +56,7 @@ static void	_thr_rtld_wlock_acquire(void *);
 
 struct rtld_lock {
 	struct	urwlock	lock;
-	char		_pad[CACHE_LINE_SIZE - sizeof(struct urwlock)];
+//	char		_pad[CACHE_LINE_SIZE - sizeof(struct urwlock)];
 };
 
 static struct rtld_lock lock_place[MAX_RTLD_LOCKS] __aligned(CACHE_LINE_SIZE);
